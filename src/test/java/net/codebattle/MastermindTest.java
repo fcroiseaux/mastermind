@@ -6,7 +6,7 @@ import static net.codebattle.Mastermind.*;
 import static net.codebattle.Color.*;
 
 /**
- * Unit test for simple Color.
+ * Tests unitaires pour la classe Mastermind
  */
 public class MastermindTest
 {

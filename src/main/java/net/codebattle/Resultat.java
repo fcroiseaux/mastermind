@@ -1,15 +1,14 @@
 package net.codebattle;
 
 /**
- * Created by IntelliJ IDEA.
- * User: croiseaux
- * Date: 01/02/12
- * Time: 15:15
- * To change this template use File | Settings | File Templates.
+ * Represente le résultat d'une comparaison entre deux combinaisons
+ * Le nombre de noirs est le nombre de pions bien places
+ * Le nombre de blanc est le nombre de pions mal places
  */
 public class Resultat {
     private int nbBienPlace, nbMalPlace;
     
+    //Resultat gagnant. Tous les pions sont bien places.
     public static Resultat won = new Resultat(4,0);
 
     public Resultat(int bienPlace, int malPlace) {
@@ -33,19 +32,21 @@ public class Resultat {
         this.nbBienPlace = nbBienPlace;
     }
 
+    // Affichage du resultat de la comparaison
     @Override
     public String toString() {
     	// TODO Auto-generated method stub
     	return " Noir : " + getNbBienPlace() + " Blanc : " + getNbMalPlace();
     }
 
-
+    // Comparaison de deux resultats
+    // Deux resultats sont egaux si les nombres de blancs et de noirs sont egaux.
     public boolean equals(Object o) {
         if (o instanceof Resultat) {
             Resultat r = (Resultat) o;
             return (r.getNbBienPlace() == getNbBienPlace()) && (r.getNbMalPlace()==getNbMalPlace());
         }
         else
-            return false;  //To change body of implemented methods use File | Settings | File Templates.
+            return false;
     }
 }

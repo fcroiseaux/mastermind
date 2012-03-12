@@ -1,7 +1,7 @@
 package net.codebattle;
 
 /**
- * Hello world!
+ * Enumeration des couleurs possibles au Mastermind
  *
  */
 public enum Color
