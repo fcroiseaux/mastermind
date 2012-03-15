@@ -1,6 +1,7 @@
 package net.intech.kata;
 
 import org.junit.*;
+import java.util.List;
 
 import java.util.LinkedList;
 
@@ -19,9 +20,14 @@ public class MasterMTest {
     public void testUrl()
     {
         MasterM m = new MasterM("http://localhost:9000/check");
-        String result = m.check(new LinkedList<String>());
+		List<String> myCode=new LinkedList<String>();
+		myCode.add("J");
+		myCode.add("R");
+		myCode.add("B");
+		myCode.add("R");
+        MasterM.Result result = m.check(myCode);
 
-        System.out.println(result);
-        assertTrue( result.length() > 0);
+        assertTrue( result.noir==2);
+        assertTrue( result.blanc==1);
     }
 }

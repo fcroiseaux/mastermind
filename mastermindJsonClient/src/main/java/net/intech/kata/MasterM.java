@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by IntelliJ IDEA.
@@ -25,8 +26,20 @@ public class MasterM {
         urlString = url;
     }
     
+    public static class Result{
+        public final int noir;
+        public final int blanc;
+        public Result(int n, int b){
+            noir=n;
+            blanc=b;
+        }
+        public String toString(){
+            return "Noir : "+noir+" Blanc : "+blanc;
+        }
+    }
+    
 
-    public String check(List<String> coups) {
+    public Result check(List<String> coups) {
 
         try {
 
@@ -36,26 +49,42 @@ public class MasterM {
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
 
-            String input = "{\"coup\":100}";
+			String code = "";
+			for(String s : coups){
+				if(code.length()>0) code+=",";
+				code+=s;
+			}
+            String input = "{\"coup\":\""+code+"\"}";
 
             OutputStream os = conn.getOutputStream();
             os.write(input.getBytes());
             os.flush();
 
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + conn.getResponseCode());
-            }
+            //System.out.println(conn.getResponseCode());
 
             BufferedReader br = new BufferedReader(new InputStreamReader(
                     (conn.getInputStream())));
 
-            String output = "";
-            System.out.println("Output from Server .... \n");
-            while ((output += br.readLine()) != null)
-
+            String output = br.readLine();
+            StringTokenizer st= new StringTokenizer(output,",");
+            int nbNoir=0;
+            int nbBanc=0;
+            while(st.hasMoreElements()){
+                String tok=st.nextToken();
+                if(tok.startsWith("{\"noirs")){
+                    String tmp=tok.substring(10);
+                    tmp=tmp.substring(0,tmp.indexOf("\""));
+                    nbNoir=new Integer(tmp).intValue();
+                }
+                else{
+                    String tmp=tok.substring(10);
+                    tmp=tmp.substring(0,tmp.indexOf("\""));
+                    nbBanc=new Integer(tmp).intValue();
+                }
+            }
             conn.disconnect();
-            return output;
+
+            return new Result(nbNoir,nbBanc);
 
         } catch (MalformedURLException e) {
 

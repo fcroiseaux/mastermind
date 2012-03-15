@@ -45,6 +45,8 @@ public class MastermindTest
     
     @Test public void testWon() {
         Essai e1 = e(Jaune, Vert, Brun, Rouge);
+        long start=System.currentTimeMillis();
         assertTrue(compare(e1, new Mastermind(e1).resoud()).equals(Resultat.won));
+        System.out.println("Durée : "+(System.currentTimeMillis()-start)+" ms");
     }
 }
