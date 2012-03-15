@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 public class MasterMTest {
 
     @Test
-    public void testUrl()
+    public void testCombi1()
     {
         MasterM m = new MasterM("http://localhost:9000/check");
 		List<String> myCode=new LinkedList<String>();
@@ -30,4 +30,20 @@ public class MasterMTest {
         assertTrue( result.noir==2);
         assertTrue( result.blanc==1);
     }
+
+    @Test
+    public void testCombi2()
+    {
+        MasterM m = new MasterM("http://localhost:9000/check");
+        List<String> myCode=new LinkedList<String>();
+        myCode.add("J");
+        myCode.add("M");
+        myCode.add("B");
+        myCode.add("R");
+        MasterM.Result result = m.check(myCode);
+
+        assertTrue( result.noir==1);
+        assertTrue( result.blanc==2);
+    }
+
 }
